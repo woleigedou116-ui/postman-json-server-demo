@@ -1,0 +1,22 @@
+{
+  "name": "postman-json-server-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:api": "json-server db.json --port 3000",
+    "test:api": "newman run ./export/collection/json-server-postman-tests.postman_collection.json -e ./export/environment/json-server-local.postman_environment.json",
+    "test:api:report": "newman run ./export/collection/json-server-postman-tests.postman_collection.json -e ./export/environment/json-server-local.postman_environment.json -r cli,htmlextra --reporter-htmlextra-export ./reports/api-test-report.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.15"
+  },
+  "devDependencies": {
+    "newman": "^6.2.2",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "hello postman",
+      "body": "this is my first json-server api"
+    },
+    {
+      "id": "2",
+      "title": "learn api testing",
+      "body": "postman can test get post patch delete"
+    },
+    {
+      "title": "postman created post",
+      "body": "created by post request",
+      "id": "b6jETYEShP4"
+    },
+    {
+      "title": "postman created post",
+      "body": "created by post request",
+      "id": "_0FrOHwymDk"
+    },
+    {
+      "title": "postman created post",
+      "body": "created by post request",
+      "id": "vgndbaMLIQk"
+    },
+    {
+      "title": "postman chain test updated",
+      "body": "created for api chaining",
+      "id": "duV6lxXNX7Y"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "Alice",
+      "email": "alice@example.com"
+    },
+    {
+      "id": "2",
+      "name": "Bob",
+      "email": "bob@example.com"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
