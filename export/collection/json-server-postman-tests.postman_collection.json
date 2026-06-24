@@ -8,292 +8,551 @@
   },
   "item": [
     {
-      "name": "新增文章",
-      "event": [
+      "name": "posts 文章接口",
+      "item": [
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"状态码是 201\", function () {\r",
-              "    pm.response.to.have.status(201);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"返回 id 字段\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data).to.have.property(\"id\");\r",
-              "});\r",
-              "\r",
-              "pm.test(\"title 创建成功\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.title).to.eql(pm.environment.get(\"new_post_title\"));\r",
-              "});\r",
-              "\r",
-              "pm.test(\"body 创建成功\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.body).to.eql(pm.environment.get(\"new_post_body\"));\r",
-              "});\r",
-              "\r",
-              "pm.test(\"保存 post_id 到环境变量\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.environment.set(\"post_id\", data.id);\r",
-              "    pm.expect(pm.environment.get(\"post_id\")).to.not.be.empty;\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"title\": \"{{new_post_title}}\",\r\n  \"body\": \"{{new_post_body}}\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+          "name": "新增文章",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 id 字段\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data).to.have.property(\"id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"title 创建成功\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.title).to.eql(pm.environment.get(\"new_post_title\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"body 创建成功\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.body).to.eql(pm.environment.get(\"new_post_body\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"保存 post_id 到环境变量\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.environment.set(\"post_id\", data.id);\r",
+                  "    pm.expect(pm.environment.get(\"post_id\")).to.not.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
-          }
-        },
-        "url": {
-          "raw": "{{base_url}}/posts",
-          "host": [
-            "{{base_url}}"
           ],
-          "path": [
-            "posts"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "查询文章",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"状态码是 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"返回 id 等于环境变量 post_id\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.id).to.eql(pm.environment.get(\"post_id\"));\r",
-              "});\r",
-              "\r",
-              "pm.test(\"title 是刚创建的文章标题\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.title).to.eql(pm.environment.get(\"new_post_title\"));\r",
-              "});\r",
-              "\r",
-              "pm.test(\"body 是刚创建的文章内容\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.body).to.eql(pm.environment.get(\"new_post_body\"));\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/posts/{{post_id}}",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "posts",
-            "{{post_id}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "修改文章",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"状态码是 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"返回 id 等于环境变量 post_id\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.id).to.eql(pm.environment.get(\"post_id\"));\r",
-              "});\r",
-              "\r",
-              "pm.test(\"title 修改成功\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.title).to.eql(pm.environment.get(\"updated_post_title\"));\r",
-              "});\r",
-              "\r",
-              "pm.test(\"body 保持不变\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.body).to.eql(pm.environment.get(\"new_post_body\"));\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "PATCH",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"title\": \"{{updated_post_title}}\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"{{new_post_title}}\",\r\n  \"body\": \"{{new_post_body}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/posts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts"
+              ]
             }
-          }
+          },
+          "response": []
         },
-        "url": {
-          "raw": "{{base_url}}/posts/{{post_id}}",
-          "host": [
-            "{{base_url}}"
+        {
+          "name": "查询文章",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 id 等于环境变量 post_id\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.id).to.eql(pm.environment.get(\"post_id\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"title 是刚创建的文章标题\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.title).to.eql(pm.environment.get(\"new_post_title\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"body 是刚创建的文章内容\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.body).to.eql(pm.environment.get(\"new_post_body\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
           ],
-          "path": [
-            "posts",
-            "{{post_id}}"
-          ]
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts",
+                "{{post_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "修改文章",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 id 等于环境变量 post_id\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.id).to.eql(pm.environment.get(\"post_id\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"title 修改成功\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.title).to.eql(pm.environment.get(\"updated_post_title\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"body 保持不变\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.body).to.eql(pm.environment.get(\"new_post_body\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"{{updated_post_title}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts",
+                "{{post_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除文章",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"删除后返回对象包含 id\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data).to.have.property(\"id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"删除的是当前 post_id\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.id).to.eql(pm.environment.get(\"post_id\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts",
+                "{{post_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "确认删除文章",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 Not Found 错误\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data).to.have.property(\"error\");\r",
+                  "    pm.expect(data.error).to.eql(\"Not Found\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/{{post_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts",
+                "{{post_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "查询不存在文章",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 Not Found 错误\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data).to.have.property(\"error\");\r",
+                  "    pm.expect(data.error).to.eql(\"Not Found\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/not-exist-id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts",
+                "not-exist-id"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "删除文章",
-      "event": [
+      "name": "users 用户接口",
+      "item": [
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"状态码是 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"删除后返回对象包含 id\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data).to.have.property(\"id\");\r",
-              "});\r",
-              "\r",
-              "pm.test(\"删除的是当前 post_id\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data.id).to.eql(pm.environment.get(\"post_id\"));\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/posts/{{post_id}}",
-          "host": [
-            "{{base_url}}"
+          "name": "新增用户",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 user_id 字段\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data).to.have.property(\"id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"name 创建成功\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.name).to.eql(pm.environment.get(\"new_user_name\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"email 创建成功\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.email).to.eql(pm.environment.get(\"new_user_email\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"保存 user_id 到环境变量\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.environment.set(\"user_id\", data.id);\r",
+                  "    pm.expect(pm.environment.get(\"user_id\")).to.not.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
           ],
-          "path": [
-            "posts",
-            "{{post_id}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "确认删除文章",
-      "event": [
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"{{new_user_name}}\",\r\n    \"email\":\"{{new_user_email}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"状态码是 404\", function () {\r",
-              "    pm.response.to.have.status(404);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"返回 Not Found 错误\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data).to.have.property(\"error\");\r",
-              "    pm.expect(data.error).to.eql(\"Not Found\");\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/posts/{{post_id}}",
-          "host": [
-            "{{base_url}}"
+          "name": "查询用户",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 id 等于环境变量 user_id\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.id).to.eql(pm.environment.get(\"user_id\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"name 是刚创建的用户名称\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.name).to.eql(pm.environment.get(\"new_user_name\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"email 是刚创建的用户邮箱\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.email).to.eql(pm.environment.get(\"new_user_email\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
           ],
-          "path": [
-            "posts",
-            "{{post_id}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "查询不存在文章",
-      "event": [
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"状态码是 404\", function () {\r",
-              "    pm.response.to.have.status(404);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"返回 Not Found 错误\", function () {\r",
-              "    const data = pm.response.json();\r",
-              "    pm.expect(data).to.have.property(\"error\");\r",
-              "    pm.expect(data.error).to.eql(\"Not Found\");\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{base_url}}/posts/not-exist-id",
-          "host": [
-            "{{base_url}}"
+          "name": "修改用户",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 id 等于环境变量 user_id\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.id).to.eql(pm.environment.get(\"user_id\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"name 修改成功\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.name).to.eql(pm.environment.get(\"updated_user_name\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"email 保持不变\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.email).to.eql(pm.environment.get(\"new_user_email\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
           ],
-          "path": [
-            "posts",
-            "not-exist-id"
-          ]
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"{{updated_user_name}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除用户",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"删除后返回对象包含 id\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data).to.have.property(\"id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"删除的是当前 user_id\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.id).to.eql(pm.environment.get(\"user_id\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "确认删除用户",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"返回 Not Found 错误\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data).to.have.property(\"error\");\r",
+                  "    pm.expect(data.error).to.eql(\"Not Found\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     }
   ]
 }
