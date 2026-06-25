@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "6c01f193-60e6-4527-8425-bf30cf5e0e23",
-    "name": "json-server 文章接口测试",
+    "name": "json-server 接口测试",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "55893270",
     "_collection_link": "https://go.postman.co/collection/55893270-6c01f193-60e6-4527-8425-bf30cf5e0e23?source=collection_link"
@@ -664,6 +664,62 @@
               "path": [
                 "users",
                 "not-exist-id"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "data-driven 数据驱动",
+      "item": [
+        {
+          "name": "数据驱动新增文章",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"状态码是 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"title 来自数据文件\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.title).to.eql(pm.iterationData.get(\"title\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"body 来自数据文件\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.body).to.eql(pm.iterationData.get(\"body\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"{{title}}\",\r\n  \"body\": \"{{body}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/posts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts"
               ]
             }
           },

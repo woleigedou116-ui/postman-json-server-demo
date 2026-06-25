@@ -6,7 +6,8 @@
   "scripts": {
     "start:api": "json-server db.json --port 3000",
     "test:api": "newman run ./export/collection/json-server-postman-tests.postman_collection.json -e ./export/environment/json-server-local.postman_environment.json",
-    "test:api:report": "newman run ./export/collection/json-server-postman-tests.postman_collection.json -e ./export/environment/json-server-local.postman_environment.json -r cli,htmlextra --reporter-htmlextra-export ./reports/api-test-report.html"
+    "test:api:report": "newman run ./export/collection/json-server-postman-tests.postman_collection.json -e ./export/environment/json-server-local.postman_environment.json -r cli,htmlextra --reporter-htmlextra-export ./reports/api-test-report.html",
+    "test:api:data": "newman run ./export/collection/json-server-postman-tests.postman_collection.json -e ./export/environment/json-server-local.postman_environment.json --folder \"data-driven 数据驱动\" -d ./data/posts.json"
   },
   "keywords": [],
   "author": "",
